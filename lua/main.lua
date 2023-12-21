@@ -751,7 +751,7 @@ local connection = socket:tcp()
 connection:connect('localhost', 0x0BB8)
 
 -- Send data to the server
-function sendPartyData(game)
+function sendGameData(game)
   local enemy = game:getEnemy()
   local party = game:getParty()
 
@@ -798,7 +798,7 @@ function updateBuffer()
 	end
   frame = frame + 1
   if frame % 300 == 0 then
-    sendPartyData(game)
+    sendGameData(game)
   end
 
 	printPartyStatus(game, partyBuffer)
