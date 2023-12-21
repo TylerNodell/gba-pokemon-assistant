@@ -748,10 +748,12 @@ end
 local connection = socket:tcp()
 
 -- Connect to the server
-connection:connect('localhost', 0x0BB8)
+-- connection:connect('localhost', 0x0BB8)
 
 -- Send data to the server
 function sendGameData(game)
+	connection:connect('localhost', 0x0BB8)
+
   local enemy = game:getEnemy()
   local party = game:getParty()
 

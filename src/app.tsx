@@ -1,18 +1,26 @@
 import { createRoot } from 'react-dom/client';
-import { useState, useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+import GlobalProvider from './util/GlobalProvider';
+import { GlobalContext } from './util/GlobalContext';
+
 
 const App = () => {
-  const [data, setData] = useState<string | null>(null);
+
+  const globalState = useContext(GlobalContext);
 
   useEffect(() => {
     dataGBA.onData((incomingData) => {
       console.log(incomingData);
-      setData(JSON.stringify(incomingData));
+      globalState.setData(JSON.stringify(incomingData));
     });
   }, []);
 
-  return <div>Hello from React, data: {data}</div>;
+  return <div>Hello from React, data: </div>;
 };
 
 const root = createRoot(document.body);
-root.render(<App />);
+root.render(
+  <GlobalProvider>
+    <App />
+  </GlobalProvider>
+);
