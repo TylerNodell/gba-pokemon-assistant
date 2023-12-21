@@ -1,4 +1,4 @@
-import { GlobalContext } from './GlobalContext';
+import { GlobalContext, GlobalState } from './GlobalContext';
 import { ReactNode, useState } from 'react';
 
 interface GlobalProviderProps {
@@ -6,10 +6,18 @@ interface GlobalProviderProps {
 }
 
 const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
-  const [data, setData] = useState<string | null>(null);
+  const [partyData, setPartyData] = useState<Array<object> | null>(null);
+  const [enemyData, setEnemyData] = useState<object | null>(null);
+
+  const value: GlobalState = {
+    partyData: partyData,
+    setPartyData: setPartyData,
+    enemyData: enemyData,
+    setEnemyData: setEnemyData,
+  };
 
   return (
-    <GlobalContext.Provider value={{ data, setData }}>
+    <GlobalContext.Provider value={value}>
       {children}
     </GlobalContext.Provider>
   );

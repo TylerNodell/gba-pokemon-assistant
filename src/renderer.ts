@@ -33,3 +33,10 @@ console.log('👋 This message is being logged by "renderer.js", included via we
 import './app';
 
 dataGBA.listen(3000, 'localhost');
+
+window.addEventListener('beforeunload', () => {
+  
+  //@ts-expect-error - electron is exposed in preload.ts
+  window.electron.closeServer();
+
+});

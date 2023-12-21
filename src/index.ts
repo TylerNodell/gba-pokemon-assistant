@@ -53,9 +53,10 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
+let server: net.Server | null = null;
 
 ipcMain.on('listen', (event, port, host) => {
-  const server = net.createServer((socket) => {
+  server = net.createServer((socket) => {
     socket.on('data', (data) => {
       const requestData = JSON.parse(data.toString());
       event.reply('data', requestData);
@@ -65,4 +66,9 @@ ipcMain.on('listen', (event, port, host) => {
   server.listen(port, host, () => {
     console.log(`Server is listening on ${host}:${port}`);
   });
+});
+
+ipcMain.on('close-server', () => {
+  server?.close();
+  console.log('Server closed');
 });

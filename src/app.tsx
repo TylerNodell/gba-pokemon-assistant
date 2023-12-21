@@ -10,10 +10,16 @@ const App = () => {
 
   useEffect(() => {
     dataGBA.onData((incomingData) => {
-      console.log(incomingData);
-      globalState.setData(JSON.stringify(incomingData));
+      const parsedData = JSON.parse(JSON.stringify(incomingData));
+      globalState.setPartyData(parsedData.party);
+      globalState.setEnemyData(parsedData.enemy);
     });
   }, []);
+
+  useEffect(() => {
+    console.log(globalState.enemyData);
+    console.log(globalState.partyData);
+  }, [globalState.enemyData]);
 
   return <div>Hello from React, data: </div>;
 };
