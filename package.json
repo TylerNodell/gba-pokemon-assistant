@@ -16,6 +16,13 @@
     "name": "Tyler Lawrence Nodell",
     "email": "Tyler.L.Nodell@gmail.com"
   },
+  "entryPoints": [
+    {
+      "preload": {
+        "js": "./src/preload.ts"
+      }
+    }
+  ],
   "license": "MIT",
   "devDependencies": {
     "@electron-forge/cli": "^7.2.0",

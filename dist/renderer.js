@@ -1,3 +1,4 @@
+"use strict";
 /**
  * This file will automatically be loaded by webpack and run in the "renderer" context.
  * To learn more about the differences between the "main" and the "renderer" context in
@@ -25,15 +26,8 @@
  *  });
  * ```
  */
-
-import './index.css';
-
+Object.defineProperty(exports, "__esModule", { value: true });
+require("./index.css");
 console.log('👋 This message is being logged by "renderer.js", included via webpack');
-
-import './app';
-
-dataGBA.listen(3000, 'localhost');
-
-dataGBA.onData((data) => {
-  console.log(data);
-});
+require("./app");
+//# sourceMappingURL=renderer.js.map
