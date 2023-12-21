@@ -18,8 +18,12 @@ const App = () => {
 
   useEffect(() => {
     console.log(globalState.enemyData);
-    console.log(globalState.partyData);
   }, [globalState.enemyData]);
+
+  useEffect(() => {
+    console.log(globalState.partyData);
+    // const partyData = parsePartyData(globalState.partyData)
+  }, [globalState.partyData]);
 
   return <div>Hello from React, data: </div>;
 };

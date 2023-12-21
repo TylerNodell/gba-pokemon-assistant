@@ -389,6 +389,7 @@ function Generation3En._readEnemyMon(game, address)
 	end
 
 	mon.species = ss0[0] & 0xFFFF
+	mon.speciesName = game:getSpeciesName(mon.species)
 	mon.heldItem = ss0[0] >> 16
 	mon.experience = ss0[1]
 	mon.ppBonuses = ss0[2] & 0xFF
@@ -490,6 +491,7 @@ function Generation3En._readBoxMon(game, address)
 	end
 
 	mon.species = ss0[0] & 0xFFFF
+	mon.speciesName = game:getSpeciesName(mon.species)
 	mon.heldItem = ss0[0] >> 16
 	mon.experience = ss0[1]
 	mon.ppBonuses = ss0[2] & 0xFF
