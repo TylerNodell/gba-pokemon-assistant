@@ -1,3 +1,6 @@
+import Pokedex from 'pokedex-promise-v2';
+const P = new Pokedex();
+
 interface Pokemon {
   toughRibbon: number | null;
   language: number | null;
@@ -74,16 +77,7 @@ function fetchPokemonData(pokemon: Array<Pokemon>): Promise<any> {
   for (const mon in pokemon) {
     console.log(mon);
   }
-  // const apiUrl = `https://pokeapi.co/api/v2/pokemon/${pokemon.id}`;
-  // return fetch(apiUrl)
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     console.log(`Data for ${pokemon.name}:`, data);
-  //     // Perform additional operations with the fetched data
-  //   })
-  //   .catch(error => {
-  //     console.error(`Error fetching data for ${pokemon.name}:`, error);
-  //   });
+  return P.getPokemonByName('pikachu');
 }
 
 export default fetchPokemonData;

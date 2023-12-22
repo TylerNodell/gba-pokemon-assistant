@@ -18,6 +18,12 @@ const App = () => {
 
   useEffect(() => {
     console.log(globalState.enemyData);
+    // window.P.getBerryByName('cheri').then((res: any) => {
+    //   console.log(res);
+    // })
+    // .catch((err: any) => {
+    //   console.log(err);
+    // });
   }, [globalState.enemyData]);
 
   useEffect(() => {

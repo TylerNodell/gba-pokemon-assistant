@@ -4,7 +4,6 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import dataGBA from './dataGBA';
 
-
 contextBridge.exposeInMainWorld('dataGBA', dataGBA);
 
 contextBridge.exposeInMainWorld('electron', {
