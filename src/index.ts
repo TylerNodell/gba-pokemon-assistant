@@ -24,8 +24,10 @@ const createWindow = (): void => {
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // Open the DevTools (development only, never in a packaged build).
+  if (!app.isPackaged) {
+    mainWindow.webContents.openDevTools();
+  }
 };
 
 // This method will be called when Electron has finished
@@ -54,12 +56,38 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 
 
+// The renderer picks the port, but it must never be able to make the main process bind a
+// privileged port or a network-facing address, so only loopback hosts are accepted.
+const LOOPBACK_HOSTS = ['localhost', '127.0.0.1', '::1'];
+
 ipcMain.on('listen', (event, port, host) => {
+  if (!Number.isInteger(port) || port < 1024 || port > 65535 || !LOOPBACK_HOSTS.includes(host)) {
+    console.error(`Refusing to listen on ${host}:${port}`);
+    return;
+  }
+
   const server = net.createServer((socket) => {
     socket.on('data', (data) => {
-      const requestData = JSON.parse(data.toString());
-      event.reply('data', requestData);
+      // Any local process can connect to this port, so treat the payload as untrusted:
+      // malformed input is dropped instead of throwing in the main process.
+      let requestData: unknown;
+      try {
+        requestData = JSON.parse(data.toString());
+      } catch {
+        return;
+      }
+      if (!event.sender.isDestroyed()) {
+        event.reply('data', requestData);
+      }
     });
+
+    socket.on('error', (error) => {
+      console.error('Socket error:', error.message);
+    });
+  });
+
+  server.on('error', (error) => {
+    console.error(`Could not listen on ${host}:${port}:`, error.message);
   });
 
   server.listen(port, host, () => {

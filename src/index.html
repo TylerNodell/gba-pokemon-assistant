@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <title>Hello World!</title>
-
+    <!-- Packaged builds only: in development the Forge dev server sends its own CSP header. -->
+    <% if (webpackConfig.mode === 'production') { %>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'" />
+    <% } %>
   </head>
   <body>
     <h1>💖 Hello World!</h1>
